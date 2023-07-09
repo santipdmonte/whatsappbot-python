@@ -3,6 +3,12 @@ import sett
 import json
 import time
 
+# Para argentina al recibir el numero llega '549..' pero para enviar se encesita '54..'   
+def replace_start(s):
+    if s.startswith("549"):
+        return "54" + s[3:]
+    return s
+
 def obtener_mensaje_whatsapp(message):
     if 'type' not in message :
         text = 'mensaje no reconocido'
