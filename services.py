@@ -223,73 +223,66 @@ def administrar_chatbot(text,number, messageId, name):
 
     markRead = markRead_Message(messageId)
     list.append(markRead)
-    time.sleep(2)
+    # time.sleep(2)
 
-    if "hola" in text:
-        body = "¡Hola! 👋 Bienvenido. ¿Cómo podemos ayudarte hoy?"
-        footer = "Equipo Bigdateros"
-        options = ["✅ servicios", "📅 agendar cita"]
+    if "agendar turno" in text:
+        print('agendar turno')
+        # TODO modificar por el link de civet          
+        textMessage = text_message(number,"Para agendar su turno ingrese a:\n\n📅 https://calendly.com/civetrosario") 
+        list.append(textMessage)
+    
+    elif "urgencias" in text:
+        print('Urgencias')
+        textMessage = text_message(number,"wa.me/3416402289 ⬅️ Numero de urgencias medicas ") 
+        list.append(textMessage)
 
-        replyButtonData = buttonReply_Message(number, options, body, footer, "sed1",messageId)
-        replyReaction = replyReaction_Message(number, messageId, "🫡")
-        list.append(replyReaction)
-        list.append(replyButtonData)
     elif "servicios" in text:
         body = "Tenemos varias áreas de consulta para elegir. ¿Cuál de estos servicios te gustaría explorar?"
-        footer = "SPedemonte"
-        options = ["Analítica Avanzada", "Migración Cloud", "Inteligencia de Negocio"]
+        footer = "@CivetRosario"
+        options = ["Turno peluqueria canina", "Viaja con tu mascota!", "Colocacion de chips"]
 
         listReplyData = listReply_Message(number, options, body, footer, "sed2",messageId)
         sticker = sticker_Message(number, get_media_id("perro_traje", "sticker"))
 
         list.append(listReplyData)
         list.append(sticker)
-    elif "inteligencia de negocio" in text:
+        
+    elif "peluqueria canina" in text:
+        print('peluqeria canina')
+        textMessage = text_message(number,"wa.me/3416402289 ⬅️ Turnos de peluqueria canina") 
+        list.append(textMessage)
+        
+    elif "viaja con tu mascota" in text:
+        print('viaja con tu mascota')
         body = "Buenísima elección. ¿Te gustaría que te enviara un documento PDF con una introducción a nuestros métodos de Inteligencia de Negocio?"
-        footer = "SPedemonte"
+        footer = "@CivetRosario"
         options = ["✅ Sí, envía el PDF.", "⛔ No, gracias"]
 
         replyButtonData = buttonReply_Message(number, options, body, footer, "sed3",messageId)
         list.append(replyButtonData)
     elif "sí, envía el pdf" in text:
+        print('sí, envía el pdf')
         sticker = sticker_Message(number, get_media_id("pelfet", "sticker"))
-        textMessage = text_message(number,"Genial, por favor espera un momento.")
 
         enviar_mensaje_whatsapp(sticker)
-        enviar_mensaje_whatsapp(textMessage)
-        time.sleep(3)
 
-        document = document_Message(number, sett.document_url, "Listo 👍🏻", "Inteligencia de Negocio.pdf")
+        document = document_Message(number, sett.document_url, "Listo 👍🏻", "Viaja_con_tu_mascota.pdf")
         enviar_mensaje_whatsapp(document)
-        time.sleep(3)
 
-        body = "¿Te gustaría programar una reunión con uno de nuestros especialistas para discutir estos servicios más a fondo?"
-        footer = "SPedemonte"
-        options = ["✅ Sí, agenda reunión", "No, gracias." ]
-
-        replyButtonData = buttonReply_Message(number, options, body, footer, "sed4",messageId)
-        list.append(replyButtonData)
-    elif "sí, agenda reunión" in text :
-        body = "Estupendo. Por favor, selecciona una fecha y hora para la reunión:"
-        footer = "SPedemonte"
-        options = ["📅 10: mañana 10:00 AM", "📅 7 de junio, 2:00 PM", "📅 8 de junio, 4:00 PM"]
-
-        listReply = listReply_Message(number, options, body, footer, "sed5",messageId)
-        list.append(listReply)
-    elif "7 de junio, 2:00 pm" in text:
-        body = "Excelente, has seleccionado la reunión para el 7 de junio a las 2:00 PM. Te enviaré un recordatorio un día antes. ¿Necesitas ayuda con algo más hoy?"
-        footer = "SPeemonte"
-        options = ["✅ Sí, por favor", "❌ No, gracias."]
-
-
-        buttonReply = buttonReply_Message(number, options, body, footer, "sed6",messageId)
-        list.append(buttonReply)
-    elif "no, gracias." in text:
-        textMessage = text_message(number,"Perfecto! No dudes en contactarnos si tienes más preguntas. Recuerda que también ofrecemos material gratuito para la comunidad. ¡Hasta luego! 😊")
+    elif "colocacion de chips" in text:
+        print('colocacion de chips')
+        textMessage = text_message(number,"Para colocacion de chips contactate con -> wa.me/03413918xyz") 
         list.append(textMessage)
+        
     else :
-        data = text_message(number,"Lo siento, no entendí lo que dijiste. ¿Quieres que te ayude con alguna de estas opciones?")
-        list.append(data)
+        body = "¡Hola! 👋 Bienvenido a Civet Rosario. ¿Cómo podemos ayudarte hoy?"
+        footer = "@CivetRosario"
+        options = ["✅ Servicios", "📅 Agendar turno", "🆘 Urgencias 24hs"]
+
+        replyButtonData = buttonReply_Message(number, options, body, footer, "sed1",messageId)
+        replyReaction = replyReaction_Message(number, messageId, "🫡")
+        list.append(replyReaction)
+        list.append(replyButtonData)
 
     for item in list:
         enviar_mensaje_whatsapp(item)
